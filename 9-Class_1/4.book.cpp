@@ -21,6 +21,13 @@ public:
         cout.unsetf(ios::fixed);
         cout << "Price: " << price << '\n';
     }
+    ~Book()
+    {
+        if(shelf_id!=NULL)
+        {
+            delete shelf_id;
+        }
+    }
 private:
     float price;
     char *shelf_id;

@@ -18,6 +18,10 @@ public:
         }
         return;
     }
+    ~menu()
+    {
+        delete item;
+    }
     void show()
     {
         for(int i=0;i<num;i++)
