@@ -35,36 +35,36 @@ matrix::matrix(int &M, int &N)
 
 matrix::matrix(matrix &A, int &&m, int &n) //从矩阵A中删除第m行第n列后得到新的矩阵
 {
-    p = new int *[rows - 1];
+    p = new int *[A.rows - 1];
     int i, j;
-    for (int i = 0; i < rows - 1; i++)
+    for (int i = 0; i < A.rows - 1; i++)
     {
-        p[i] = new int[cols - 1];
+        p[i] = new int[A.cols - 1];
     }
-    for (i = 0; i < m - 1; i++) //左上
+    for (i = 0; i <m; i++) //左上
     {
-        for (j = 0; j < n - 1; j++)
+        for (j = 0; j < n ; j++)
         {
             p[i][j] = A.p[i][j];
         }
     }
-    for (i = m - 1; i < rows - 1; i++) //左下
+    for (i = m; i < A.rows-1; i++) //左下
     {
-        for (j = 0; j < n - 1; j++)
+        for (j = 0; j < n; j++)
         {
             p[i][j] = A.p[i + 1][j];
         }
     }
-    for (i = 0; i < m - 1; i++) //右上
+    for (i = 0; i < m ; i++) //右上
     {
-        for (j = n - 1; j < cols - 1; j++)
+        for (j = n; j < A.cols-1; j++)
         {
             p[i][j] = A.p[i][j + 1];
         }
     }
-    for (i = m - 1; i < rows - 1; i++) //右下
+    for (i = m; i < A.rows-1; i++) //右下
     {
-        for (j = n - 1; n < cols - 1; j++)
+        for (j = n; j < A.cols-1; j++)
         {
             p[i][j] = A.p[i + 1][j + 1];
         }
