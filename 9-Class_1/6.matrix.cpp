@@ -35,36 +35,38 @@ matrix::matrix(int &M, int &N)
 
 matrix::matrix(matrix &A, int &&m, int &n) //从矩阵A中删除第m行第n列后得到新的矩阵
 {
+    rows = A.rows - 1;
+    cols = A.cols - 1;
     p = new int *[A.rows - 1];
     int i, j;
     for (int i = 0; i < A.rows - 1; i++)
     {
         p[i] = new int[A.cols - 1];
     }
-    for (i = 0; i <m; i++) //左上
+    for (i = 0; i < m; i++) //左上
     {
-        for (j = 0; j < n ; j++)
+        for (j = 0; j < n; j++)
         {
             p[i][j] = A.p[i][j];
         }
     }
-    for (i = m; i < A.rows-1; i++) //左下
+    for (i = m; i < A.rows - 1; i++) //左下
     {
         for (j = 0; j < n; j++)
         {
             p[i][j] = A.p[i + 1][j];
         }
     }
-    for (i = 0; i < m ; i++) //右上
+    for (i = 0; i < m; i++) //右上
     {
-        for (j = n; j < A.cols-1; j++)
+        for (j = n; j < A.cols - 1; j++)
         {
             p[i][j] = A.p[i][j + 1];
         }
     }
-    for (i = m; i < A.rows-1; i++) //右下
+    for (i = m; i < A.rows - 1; i++) //右下
     {
-        for (j = n; j < A.cols-1; j++)
+        for (j = n; j < A.cols - 1; j++)
         {
             p[i][j] = A.p[i + 1][j + 1];
         }
@@ -82,7 +84,7 @@ matrix::~matrix()
 matrix matrix::multi(int x) //  数乘
 {
     matrix tmp(rows, cols);
-    int i, j, m, n;
+    int i, j;
     for (i = 0; i < this->rows; i++)
     {
         for (j = 0; j < this->cols; j++)
