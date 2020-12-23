@@ -24,10 +24,6 @@ int main()
         ss.str(tmp);
         while (ss >> tmp)
         {
-            if (tmp == ":")
-            {
-                break;
-            }
             colonPos = tmp.find(':');
             if (colonPos != string::npos)
             {
