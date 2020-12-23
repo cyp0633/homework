@@ -5,3 +5,5 @@ test.cpp
 *.in
 *.out
 *.txt
+showdata.py
+showdata.cpp
