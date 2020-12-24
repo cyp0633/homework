@@ -14,7 +14,7 @@ struct student
     student *next;
     bool operator<(const student &another) const //  重载运算符  <  (小于)，用于结构体对象之间的比较，在LinkSort中比较链表的两个节点大小
     {
-        return;
+        return this->chinese+this->computer<another.chinese+another.computer;
     }
 };
 
@@ -31,9 +31,8 @@ int main()
     student *head = NULL; //  链表头指针
     FILE *fp;
 
-    fp = fopen("grade.bin",
-    ); //  打开二进制文件，用于读写以及添加记录
-    head = ReadFile();
+    fp = fopen("grade.bin","wb"); //  打开二进制文件，用于读写以及添加记录
+    head = ReadFile(fp,head,n);
     display(head);
     fclose(fp);
 
@@ -57,7 +56,7 @@ student *ReadFile(FILE *fp, student *head, int &n) //本函数将调用fread函�
     while (1)
     {
         student *p = new student; //  用于存储读入的数据块
-        if (!fread())             //  从文件fp中读入大小为sizeof(student)的数据块，保存于内存缓冲区p之中,  fread将返回读入的字节数，如果为0，则结束读文件
+        if (!fread(p,1,sizeof(student),fp))             //  从文件fp中读入大小为sizeof(student)的数据块，保存于内存缓冲区p之中,  fread将返回读入的字节数，如果为0，则结束读文件
         {
             delete p;
             break;
@@ -75,11 +74,11 @@ student *ReadFile(FILE *fp, student *head, int &n) //本函数将调用fread函�
     return head;
 }
 
-void WriteFile() //本函数将调用fwrite函数写数据块，这个函数非常有用
+void WriteFile(FILE *fp,student *head) //本函数将调用fwrite函数写数据块，这个函数非常有用
 {
     while (head)
     {
-        fwrite(); //  将缓冲区head中的内容(数据块)写入文件中
+        fwrite(head,sizeof(student),sizeof(student),fp); //  将缓冲区head中的内容(数据块)写入文件中
         head = head->next;
     }
 }
@@ -89,7 +88,12 @@ void display(student *head)
     student *p = head;
     while (p)
     {
-
+        cout<<"No: "<<p->no<<"\nName: "<<p->name<<"\nSex: "<<p->sex<<"\nAge: "<<p->age;
+        cout.precision(6);
+        cout<<"\nScores: "<<p->chinese;
+        cout.precision(6);
+        cout<<' '<<p->computer<<"\n\n";
+        p=p->next;
         //  输出链表节点内容
     }
 }
@@ -149,7 +153,7 @@ student *LinkSort(student *head, const int &n)
         {
             if (*p < *p->next)
             {
-                swapNode(); //  交换节点值
+                swapNode(p,p->next); //  交换节点值
             }
             p = p->next;
         }
