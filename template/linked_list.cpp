@@ -85,8 +85,15 @@ public:
             pos = pos->getNext();
         }
         newNode = new Node<numtype>(val);
-        pos->setNext(newNode);
+        // pos->setNext(newNode);
+        pos->next=newNode;
         return;
+    }
+    void push2(numtype &val)
+    {
+        Node<numtype> *newNode=new Node<numtype>(val);
+        end->next=newNode;
+        end=newNode;
     }
     void displayAll()
     {
@@ -98,7 +105,13 @@ public:
         }
         return;
     }
-
+    void initialize(numtype val)
+    {
+        Node<numtype> *firstNode=new Node<numtype>(val);
+        end=firstNode;
+        start=firstNode;
+        return;
+    }
 private:
     Node<numtype> *start;
     Node<numtype> *end;
@@ -107,9 +120,10 @@ private:
 int main()
 {
     List<int> list1;
+    list1.initialize(int(1));
     int temp;
     cin >> temp;
-    list1.push(temp);
+    list1.push2(temp);
     list1.displayAll();
     return 0;
 }
