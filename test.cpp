@@ -1,12 +1,12 @@
 #include<cstdio>
 #include<iostream>
 #include<string>
-#include<format>
 using namespace std;
 
 int main()
 {
-    int a;
-    cout<<format("PRINT {0}",a)<<'\n';
-    return 0;
+    string s1="\\\'ABC\'0",s2;
+    cin>>s2;
+    int len=s1.length(),len2=s2.length();
+    int size=sizeof(s1),size2=sizeof(s2);
 }
