@@ -122,13 +122,13 @@ private:
             (*visit)(curr);
         }
     }
-    int BinTreeDepth(BinNode<E> *tmp) //获得二叉树的深度
+    int BinTreeHeight(BinNode<E> *tmp) //获得二叉树的深度
     {
         if (tmp == nullptr) //MAY NOT WORK
         {
             return 0;
         }
-        int lDepth = BinTreeDepth(tmp->left()), rDepth = BinTreeDepth(tmp->right());
+        int lDepth = BinTreeHeight(tmp->left()), rDepth = BinTreeHeight(tmp->right());
         return (lDepth < rDepth ? rDepth : lDepth) + 1;
     }
     int BinTreeNodes(BinNode<E> *tmp) //获得二叉树的结点数
@@ -139,7 +139,7 @@ private:
         }
         return BinTreeNodes(tmp->left()) + BinTreeNodes(tmp->right()) + 1;
     }
-    int BinTreeHeight(BinNode<E> *tmp) //获得二叉树的高度
+    int BinTreeDepth(BinNode<E> *tmp) //获得二叉树的高度
     {
         if (tmp == nullptr)
         {
