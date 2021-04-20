@@ -108,7 +108,7 @@ private:
     }
     void LevelOrderTranverse(BinNode<E> *tmp, void (*visit)(BinNode<E> *node)) //层次遍历，void(*visit)(BinNode<E>*node)为一个函数指针参数，用visit代替传进来的函数，在遍历函数中使用传进来的函数功能
     {
-        if(tmp==null)
+        if(tmp==nullptr)
         {
             return;
         }
@@ -132,12 +132,8 @@ private:
     }
     int BinTreeHeight(BinNode<E> *tmp) //获得二叉树的深度
     {
-        if (tmp == nullptr) //MAY NOT WORK
-        {
-            return 0;
-        }
-        int lDepth = BinTreeHeight(tmp->left()), rDepth = BinTreeHeight(tmp->right());
-        return (lDepth < rDepth ? rDepth : lDepth) + 1;
+        if(tmp==nullptr) return 0;
+        return BinTreeDepth(tmp)-1;
     }
     int BinTreeNodes(BinNode<E> *tmp) //获得二叉树的结点数
     {
