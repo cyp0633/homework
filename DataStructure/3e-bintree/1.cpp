@@ -68,42 +68,50 @@ private:
     BinNode<E> *root;         //根结点
     void clear(BinNode<E> *r) //清空二叉树
     {
-        if (r->left() != nullptr)
+        if (r == nullptr)
         {
-            clear(r->left());
+            return;
         }
-        if (r->right() != nullptr)
-        {
-            clear(r->right());
-        }
+        clear(r->left());
+        clear(r->right());
         delete r;
     }
     void preOrder(BinNode<E> *tmp, void (*visit)(BinNode<E> *node)) //先序遍历，void(*visit)(BinNode<E>*node)为一个函数指针参数，用visit代替传进来的函数，在遍历函数中使用传进来的函数功能
     {
+        if (tmp == nullptr)
+        {
+            return;
+        }
         (*visit)(tmp);
-        if (tmp->left() != nullptr)
-            preOrder(tmp->left(), visit);
-        if (tmp->right() != nullptr)
-            preOrder(tmp->right(), visit);
+        preOrder(tmp->left(), visit);
+        preOrder(tmp->right(), visit);
     }
     void inOrder(BinNode<E> *tmp, void (*visit)(BinNode<E> *node)) //中序遍历，void(*visit)(BinNode<E>*node)为一个函数指针参数，用visit代替传进来的函数，在遍历函数中使用传进来的函数功能
     {
-        if (tmp->left() != nullptr)
-            inOrder(tmp->left(), visit);
+        if (tmp == nullptr)
+        {
+            return;
+        }
+        inOrder(tmp->left(), visit);
         (*visit)(tmp);
-        if (tmp->right() != nullptr)
-            inOrder(tmp->right(), visit);
+        inOrder(tmp->right(), visit);
     }
     void postOrder(BinNode<E> *tmp, void (*visit)(BinNode<E> *node)) //后序遍历，void(*visit)(BinNode<E>*node)为一个函数指针参数，用visit代替传进来的函数，在遍历函数中使用传进来的函数功能
     {
-        if (tmp->left() != nullptr)
-            postOrder(tmp->left(), visit);
-        if (tmp->right() != nullptr)
-            postOrder(tmp->right(), visit);
+        if (tmp == nullptr)
+        {
+            return;
+        }
+        postOrder(tmp->left(), visit);
+        postOrder(tmp->right(), visit);
         (*visit)(tmp);
     }
     void LevelOrderTranverse(BinNode<E> *tmp, void (*visit)(BinNode<E> *node)) //层次遍历，void(*visit)(BinNode<E>*node)为一个函数指针参数，用visit代替传进来的函数，在遍历函数中使用传进来的函数功能
     {
+        if(tmp==null)
+        {
+            return;
+        }
         queue<BinNode<E> *> visitQueue;
         visitQueue.push(tmp);
         BinNode<E> *curr;
