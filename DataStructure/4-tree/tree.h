@@ -3,25 +3,25 @@
 #define NODE_H
 #include "./BinTree.h"
 #include <cstdio>
-template <typename E>
-class Node : public BinNode<E>
+class Node
 {
 private:
-    E value;                        //值
-    Node<E> *leftChild;
-    Node<E>* rightChild; //右子节点
+    char value; //值
+    Node *leftChild;
+    Node *rightChild; //右子节点
 public:
     Node() {}
-    Node(const E elem)
+    ~Node(){}
+    Node(const char elem)
     {
         value = elem;
-        leftChild=rightChild=nullptr;
+        leftChild = rightChild = nullptr;
     }
-    E &element()
+    char &element()
     {
         return value;
     }
-    void setElement(const E &elem)
+    void setElement(const char &elem)
     {
         value = elem;
     }
@@ -33,11 +33,11 @@ public:
     {
         return rightChild;
     }
-    void setLeft(Node<E> *left)
+    void setLeft(Node *left)
     {
         leftChild = left;
     }
-    void setRight(Node<E> *right)
+    void setRight(Node *right)
     {
         rightChild = right;
     }
@@ -45,67 +45,98 @@ public:
     {
         return leftChild != nullptr && rightChild != nullptr;
     }
-    friend class Tree<E>;
+    friend class Tree;
 };
-template <typename E>
-class Tree : public BinTree<E>
+class Tree
 {
 private:
-    Node<E> *root;
-    Node<E> *curr;
+    Node *root;
+    Node *curr;
 
 public:
     Tree()
     {
-        root=curr=nullptr;
-        build(root);
+        root = curr = nullptr;
+        root=build(root);
     }
-    void build(BinNode<E>* root)
+    Node* build(Node *r)
     {
         char tempLabel;
-        tempLabel=getchar();
-        if(tempLabel=='#')
+        tempLabel = getchar();
+        if (tempLabel == '#')
         {
-            return;
+            return nullptr;
         }
-        root=new Node<E>(tempLabel);
-        build(root->left());
-        build(root->right());
+        r = new Node(tempLabel);
+        r->setLeft(build(r->left()));
+        r->setRight(build(r->right()));
+        return r;
     }
     ~Tree()
     {
         destroy(root);
     }
-    void destroy(BinNode<E>* root)
+    void destroy(Node *r)
     {
-        if(root==nullptr)
+        if (r == nullptr)
         {
             return;
         }
-        destroy(root->left());
-        destroy(root->right());
-        delete root;
+        destroy(r->left());
+        destroy(r->right());
+        delete r;
         return;
     }
     void goRoot()
     {
-        curr=root;
+        curr = root;
     }
     void goLeft()
     {
-        curr=curr->left();
+        curr = curr->left();
     }
     void goRight()
     {
-        curr=curr->right();
+        curr = curr->right();
     }
-    E getValue()
+    char getValue()
     {
         return curr->element();
     }
-    void setValue()
+    void setValue(char &elem)
     {
-        curr
+        curr->setElement(elem);
+    }
+    void startSearch(char c)
+    {
+        curr=search(c,root);
+    }
+    Node* getCurrPtr()
+    {
+        return curr;
+    }
+    Node* search(char c,Node* r)
+    {
+        if(r==nullptr)
+        {
+            return nullptr;
+        }
+        if(r->element()==c)
+        {
+            return r;
+        }
+        Node* temp=search(c,r->left());
+        if(temp!=nullptr)
+        {
+            return temp;
+        }
+        temp=search(c,r->right());
+        if(temp!=nullptr)
+        {
+            return temp;
+        }
+        return nullptr;
     }
 };
+
 #endif
