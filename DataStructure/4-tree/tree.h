@@ -3,7 +3,7 @@
 #define NODE_H
 #include "./BinTree.h"
 #include <cstdio>
-class Node
+class Node : public BinNode
 {
 private:
     char value; //值
@@ -11,7 +11,7 @@ private:
     Node *rightChild; //右子节点
 public:
     Node() {}
-    ~Node(){}
+    ~Node() {}
     Node(const char elem)
     {
         value = elem;
@@ -47,7 +47,7 @@ public:
     }
     friend class Tree;
 };
-class Tree
+class Tree : public BinTree
 {
 private:
     Node *root;
@@ -57,9 +57,9 @@ public:
     Tree()
     {
         root = curr = nullptr;
-        root=build(root);
+        root = build(root);
     }
-    Node* build(Node *r)
+    Node *build(Node *r)
     {
         char tempLabel;
         tempLabel = getchar();
@@ -109,29 +109,29 @@ public:
     }
     void startSearch(char c)
     {
-        curr=search(c,root);
+        curr = search(c, root);
     }
-    Node* getCurrPtr()
+    Node *getCurrPtr()
     {
         return curr;
     }
-    Node* search(char c,Node* r)
+    Node *search(char c, Node *r)
     {
-        if(r==nullptr)
+        if (r == nullptr)
         {
             return nullptr;
         }
-        if(r->element()==c)
+        if (r->element() == c)
         {
             return r;
         }
-        Node* temp=search(c,r->left());
-        if(temp!=nullptr)
+        Node *temp = search(c, r->left());
+        if (temp != nullptr)
         {
             return temp;
         }
-        temp=search(c,r->right());
-        if(temp!=nullptr)
+        temp = search(c, r->right());
+        if (temp != nullptr)
         {
             return temp;
         }
