@@ -1,9 +1,9 @@
 #ifndef GRAPH_TEST_H_INCLUDED
 #define GRAPH_TEST_H_INCLUDED
 #define INFINITY 1000000
-#include <queue>
-#include "./graph.h"
+#include "./grmat.h"
 #include <iostream>
+#include <queue>
 #define UNVISITED 0
 class option
 {
@@ -19,10 +19,44 @@ public:
 
     void DFS(int v, void (*PreVisit)(int v), void (*PostVisit)(int v), void (*Visiting)(int v)) // Depth first search
     {
+        if (G->getMark(v) == VISITED)
+        {
+            return;
+        }
+        PreVisit(v); //不知道这个位置对不对
+        Visiting(v);
+        G->setMark(v, VISITED);
+        for (int i = 0; i < G->n(); i++)
+        {
+            if (G->isEdge(v, i))
+            {
+
+                DFS(i, PreVisit, PostVisit, Visiting);
+            }
+        }
+        PostVisit(v);
     }
 
     void BFS(int start, void (*PreVisit)(int v), void (*PostVisit)(int v), void (*Visiting)(int v))
     {
+        std::queue<int> visitQueue;
+        visitQueue.emplace(start);
+        int temp;
+        while (!visitQueue.empty())
+        {
+            temp = visitQueue.front();
+            Visiting(temp);
+            G->setMark(temp, VISITED);
+            for (int i = 0; i < G->n(); i++)
+            {
+                if (G->isEdge(temp, i) && !G->getMark(i))
+                {
+                    PreVisit(i);
+                    visitQueue.push(i);
+                }
+            }
+            PostVisit(temp);
+        }
     }
 
     void Dijkstra1(int *D, int s)
