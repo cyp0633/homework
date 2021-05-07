@@ -42,19 +42,22 @@ public:
         std::queue<int> visitQueue;
         visitQueue.emplace(start);
         int temp;
+        printf("PreVisit vertex %d\n",start);
+        G->setMark(start,VISITED);
         while (!visitQueue.empty())
         {
             temp = visitQueue.front();
             Visiting(temp);
-            G->setMark(temp, VISITED);
             for (int i = 0; i < G->n(); i++)
             {
                 if (G->isEdge(temp, i) && !G->getMark(i))
                 {
                     PreVisit(i);
                     visitQueue.push(i);
+                    G->setMark(i,VISITED);
                 }
             }
+            visitQueue.pop();
             PostVisit(temp);
         }
     }
