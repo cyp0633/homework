@@ -191,9 +191,9 @@ public:
         for (int i = 0; i < numVertex; i++)
         {
             vertex[i]->moveToStart();
-            for (int j = 0; j < vertex[i]->length();j++)
+            for (int j = 0; j < vertex[i]->length(); j++)
             {
-                if(vertex[i]->getValue().vertex()==v)//终点为v
+                if (vertex[i]->getValue().vertex() == v) //终点为v
                 {
                     result++;
                 }
@@ -208,7 +208,7 @@ public:
     {
         int result = 0;
         //............... 在此行以下插入补充代码
-        result=vertex[v]->length();
+        result = vertex[v]->length();
         //............... 在此行以上插入补充代码
         return result;
     }

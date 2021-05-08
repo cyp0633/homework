@@ -2,9 +2,11 @@
 #define GRAPH_TEST_H_INCLUDED
 #define INFINITY 1000000
 #include "./grmat.h"
+#include <cstdio>
 #include <iostream>
 #include <queue>
 #define UNVISITED 0
+using namespace std;
 class option
 {
 private:
@@ -42,8 +44,8 @@ public:
         std::queue<int> visitQueue;
         visitQueue.emplace(start);
         int temp;
-        printf("PreVisit vertex %d\n",start);
-        G->setMark(start,VISITED);
+        printf("PreVisit vertex %d\n", start);
+        G->setMark(start, VISITED);
         while (!visitQueue.empty())
         {
             temp = visitQueue.front();
@@ -54,7 +56,7 @@ public:
                 {
                     PreVisit(i);
                     visitQueue.push(i);
-                    G->setMark(i,VISITED);
+                    G->setMark(i, VISITED);
                 }
             }
             visitQueue.pop();
@@ -62,8 +64,41 @@ public:
         }
     }
 
-    void Dijkstra1(int *D, int s)
+    void Dijkstra1(int *D, int s) //D是距离数组，s是起始点
     {
+        // priority_queue<pair<int, int>,vector<pair<int,int>>, greater<pair<int, int>>> dist; //优先队列写佛了，写个暴力的
+        // dist.push(pair<int, int>(0, s));//first是距离，second是终点
+        // while(!dist.empty())
+        // {
+        //     pair<int,int> temp=dist.top();
+        //     D[temp.second]=temp.first;
+        //     dist.pop();
+        //     for(int i=0;i<G->n();i++)
+        //     {
+        //         if(G->isEdge(temp.second,i)&&temp.first+G->weight(temp.second,i)<D[i])
+        //         {
+        //             D[i]=temp.first+G->weight(temp.second,i);
+        //             dist.push(pair<int,int>(D[i],i));
+        //         }
+        //     }
+        // }
+        int v;
+        for(int i=0;i<G->n();i++)
+        {
+            v=minVertex(D);
+            if(D[v]==INFINITY)
+            {
+                return;
+            }
+            G->setMark(v,VISITED);
+            for(int w=G->first(v);w<G->n();w=G->next(v,w))
+            {
+                if(D[w]>D[v]+G->weight(v,w))
+                {
+                    D[w]=D[v]+G->weight(v,w);
+                }
+            }
+        }
     }
 
     int minVertex(int *D) // Find min cost vertex
@@ -88,6 +123,28 @@ public:
     }
     void Prim(int *D, int s) // Prim's MST algorithm
     {
+        int nearNeighbor[G->n()];
+        for(int i=0;i<G->n();i++)
+        {
+            int v=minVertex(D);
+            G->setMark(v,VISITED);
+            if(v!=s)
+            {
+                AddEdgetoMST(nearNeighbor[v],v);
+            }
+            if(D[v]==INFINITY)
+            {
+                return;
+            }
+            for(int w=G->first(v);w<G->n();w=G->next(v,w))
+            {
+                if(D[w]>G->weight(v,w))
+                {
+                    D[w]=G->weight(v,w);
+                    nearNeighbor[w]=v;
+                }
+            }
+        }
     }
 };
 
