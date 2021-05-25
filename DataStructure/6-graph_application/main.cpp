@@ -2,6 +2,7 @@
 #include<iostream>
 #include<cstring>
 #include<cmath>
+#include<iomanip>
 #include "grmat.h"
 using namespace std;
 int maxVertex(double* D,Graphm &g)
@@ -64,6 +65,9 @@ int main()
     b-=1;
     double ratio=ShortestPath(g,a,b);
     double num=100/ratio;
-    printf("%lf",num);
+    num*=pow(10,8);
+    num=floor(num);
+    num/=pow(10,8);
+    cout<<setprecision(11)<<num;
     return 0;
 }
