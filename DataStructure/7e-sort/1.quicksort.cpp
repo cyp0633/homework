@@ -31,7 +31,7 @@ void qsort(int *A, int left, int right)
     }
     int pivotIndex = findpivot(A, left, right);
     swap(A[pivotIndex], A[right]);
-    int k = Partition(A, left, right, A[right]);
+    int k = Partition(A, left - 1, right, A[right]);
     swap(A[k], A[right]);
     qsort(A, left, k - 1);
     qsort(A, k + 1, right);
