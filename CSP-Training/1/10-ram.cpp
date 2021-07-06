@@ -14,6 +14,7 @@ void doAlloc(ramblock r[], const int &m, const int &size, int &x, int &blockNum)
 void doErase(ramblock r[], const int &target, int &blockNum);
 void doDefragment(ramblock r[], const int &blockNum);
 bool compBlock(ramblock a, ramblock b);
+void myInsertSort(ramblock r[], const int &blockNum);
 int main()
 {
     string instruction;
@@ -45,6 +46,7 @@ void doAlloc(ramblock r[], const int &m, const int &size, int &x, int &blockNum)
     x++;
     blockNum++;
     r[blockNum].serial = x;
+    r[blockNum].endPos = 0;
     for (int i = 1; i < blockNum; i++) //遍历原有结点找空隙
     {
         if (r[i].startPos - r[i - 1].endPos > size)
@@ -66,7 +68,8 @@ void doAlloc(ramblock r[], const int &m, const int &size, int &x, int &blockNum)
         r[x].startPos = r[x - 1].endPos + 1;
         r[x].endPos = r[x].startPos + size - 1;
     }
-    sort(r + 1, r + blockNum, compBlock);
+    //sort(r + 1, r + blockNum, compBlock);
+    myInsertSort(r, blockNum);
     printf("%d\n", x);
     return;
 }
@@ -78,7 +81,8 @@ void doErase(ramblock r[], const int &target, int &blockNum)
         {
             r[i].erased = true;
             blockNum--;
-            sort(r + 1, r + blockNum, compBlock);
+            //sort(r + 1, r + blockNum, compBlock);
+            myInsertSort(r, blockNum + 1);
             return;
         }
     }
@@ -100,4 +104,18 @@ bool compBlock(ramblock a, ramblock b)
     if (a.erased)
         return false;
     return a.startPos < b.startPos;
+}
+void myInsertSort(ramblock r[], const int &blockNum)
+{
+    for (int j = 2; j <= blockNum; j++)
+    {
+        ramblock key = r[j];
+        int i = j - 1;
+        while (i >= 0 && !compBlock(r[i], key))
+        {
+            r[i + 1] = r[i];
+            i--;
+        }
+        r[i + 1] = key;
+    }
 }
