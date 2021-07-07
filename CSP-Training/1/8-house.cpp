@@ -59,12 +59,13 @@ int main()
     int m, t, j;
     char id[19];
     cin >> m >> t;
+    getchar(); //吸收行尾的回车
     for (int i = 0; i < t; i++)
     {
         gets(id);
         for (j = 0; j < n; j++)
         {
-            if (p[j].second.id == id)
+            if (equal(p[j].second.id, p[j].second.id + 18, id))
             {
                 break;
             }
@@ -91,7 +92,7 @@ int main()
             }
             continue;
         }
-        printf("%d/%d\n", lastForSamePriority[j] - j, lastForSamePriority[j] - firstForSamePriority[j]);
+        printf("%d/%d\n", m - firstForSamePriority[j], lastForSamePriority[j] - firstForSamePriority[j] + 1);
     }
     return 0;
 }
@@ -99,7 +100,8 @@ people *getMess(int &n) /* 将文件数据读入内存 */
 
 {
     FILE *fp;
-    fp = fopen("C:/Users/cyp0633/OneDrive/Code/homework/CSP-Training/1/house.bin", "rb");
+    // fp = fopen("C:/Users/cyp0633/OneDrive/Code/homework/CSP-Training/1/house.bin", "rb"); //debug
+    fp = fopen("house.bin", "rb"); //release
     fseek(fp, -1 * (long)sizeof(int), 2);
     fread(&n, sizeof(int), 1, fp);
     rewind(fp);
@@ -117,14 +119,14 @@ long long int getPriority(people &a)
     }
     else if (a.area > 0) //改善性需求
     {
-        return a.area * -100000000 - time;
+        return -100000000 * a.area - time;
     }
     else //没有购房资格
     {
         return -1000000000000;
     }
 }
-int getDay(char date[])
+int getDay(char date[]) //这是一个不准确的计算天数算法，但精度应该够用
 {
     for (int i = 0; i < 10; i++)
     {
