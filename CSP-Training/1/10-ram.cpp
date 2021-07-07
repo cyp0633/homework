@@ -65,9 +65,10 @@ void doAlloc(ramblock r[], const int &m, const int &size, int &x, int &blockNum)
             printf("NULL\n");
             return;
         }
-        r[x].startPos = r[x - 1].endPos + 1;
-        r[x].endPos = r[x].startPos + size - 1;
+        r[blockNum].startPos = r[blockNum - 1].endPos + 1;
+        r[blockNum].endPos = r[blockNum].startPos + size - 1;
     }
+    r[blockNum].erased = false;
     //sort(r + 1, r + blockNum, compBlock);
     myInsertSort(r, blockNum);
     printf("%d\n", x);
