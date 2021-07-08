@@ -7,7 +7,7 @@ using namespace std;
 struct contact
 {
     string name;
-    string phonenum[30];
+    string phonenum[200];
     int phoneCount = 0;
 } c[20];
 int checkSub(const string &a, const string &b); //返回1:a是b的后缀 -1:b是a的后缀
