@@ -40,7 +40,7 @@ int main()
                 r[rNum].name = rName;
                 rCount++;
             }
-            if(j<10)r[rNum].pos[j]++;
+            if(j<100)r[rNum].pos[j]++;
             r[rNum].point+=rankScore[j];
         }
     }
@@ -56,7 +56,7 @@ bool originalComp(const racer &a, const racer &b)
     {
         return a.point>b.point;
     }
-    for(int i=0;i<10;i++)
+    for(int i=0;i<100;i++)
     {
         if(a.pos[i]!=b.pos[i])
         {
@@ -75,7 +75,7 @@ bool altComp(const racer &a, const racer &b)
     {
         return a.point>b.point;
     }
-    for(int i=1;i<10;i++)
+    for(int i=1;i<100;i++)
     {
         if(a.pos[i]!=b.pos[i])
         {
