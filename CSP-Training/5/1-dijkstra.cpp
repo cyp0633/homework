@@ -2,20 +2,20 @@
 #include <cstdio>
 #include <iostream>
 #include <stack>
+#include <vector>
 using namespace std;
 int graph[10000][10000];
-bool Greater(const string &a, const string &b);
+bool Greater(const vector<int> &a, vector<int> b, int n); //先把n推入vector b中
 int *Dijkstra(int source, int n)
 {
     int *dist = new int[n + 1], mark[n + 1];
-    string routeStr[n + 1];
+    vector<int> routeStr[n];
     for (int i = 0; i < n + 1; i++)
     {
         dist[i] = 1 << 31 - 1;
         mark[i] = 0;
-        routeStr[i] = "999999999";
     }
-    routeStr[0] = "1";
+    routeStr[0].push_back(1);
     dist[source] = 0;
     int v;
     for (int i = 0; i < n; i++)
@@ -35,10 +35,11 @@ int *Dijkstra(int source, int n)
         mark[v] = 1;
         for (int j = 0; j < n; j++)
         {
-            if (((dist[j] == dist[v] + graph[v][j]) && Greater(routeStr[j], routeStr[v] + to_string(j + 1))) || dist[j] > dist[v] + graph[v][j])
+            if (((dist[j] == dist[v] + graph[v][j]) && Greater(routeStr[j], routeStr[v], j + 1)) || dist[j] > dist[v] + graph[v][j])
             {
                 dist[j] = dist[v] + graph[v][j];
-                routeStr[j] = routeStr[v] + ' ' + to_string(j + 1);
+                routeStr[j] = routeStr[v];
+                routeStr[j].push_back(j + 1);
             }
         }
     }
@@ -47,7 +48,10 @@ int *Dijkstra(int source, int n)
         printf("-1");
         return dist;
     }
-    cout << routeStr[n - 1];
+    for (vector<int>::iterator i = routeStr[n - 1].begin(); i != routeStr[n - 1].end(); i++)
+    {
+        printf("%d ", *i);
+    }
     return dist;
 }
 int main()
@@ -75,9 +79,10 @@ int main()
     int *dist = Dijkstra(s - 1, n);
     return 0;
 }
-bool Greater(const string &a, const string &b)
+bool Greater(const vector<int> &a, vector<int> b, int n)
 {
-    int minLen = a.length() < b.length() ? a.length() : b.length();
+    b.push_back(n);
+    int minLen = a.size() < b.size() ? a.size() : b.size();
     for (int i = 0; i < minLen; i++)
     {
         if (a[i] != b[i])
