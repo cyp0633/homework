@@ -16,7 +16,6 @@ int main()
             break;
         }
         curse[m] = split(curseTemp);
-        // curse[m].first = curse[m].first.substr(1, curseTemp.length() - 2); //把括号截掉。原版题是没有括号的
         m++;
     }
     scanf("%d", &n);
