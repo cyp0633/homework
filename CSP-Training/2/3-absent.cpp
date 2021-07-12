@@ -15,11 +15,10 @@ int main()
         {
             break;
         }
-        getchar();
         nameNum = 0;
         for (int i = 0; i < n * 2 - 1; i++)
         {
-            getline(cin, tempName);
+            cin >> tempName;
             for (j = 0; j < nameNum; j++)
             {
                 if (student[j].first == tempName)
