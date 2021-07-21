@@ -1,40 +1,52 @@
 //多项式加法
 #include <cstdio>
-#include <cstring>
 #include <iostream>
+#include <map>
 using namespace std;
 
 int main()
 {
-    double a[10000], b[10000], coefficient;
-    int expr;
-    memset(a, 0, sizeof(a));
-    memset(b, 0, sizeof(b));
-    while (cin >> expr >> coefficient)
+    map<int,int> a;
+    int coefficient,num;
+    while(cin>>num>>coefficient)
     {
-        if (expr == 0 && coefficient == 0)
+        if(num==coefficient&&num==0)
         {
             break;
         }
-        a[expr] = coefficient;
+        if(a.count(num)==0)
+        {
+            a[num]=coefficient;
+        }
+        else
+        {
+            a[num]+=coefficient;
+        }
     }
-    while (cin >> expr >> coefficient)
+    while(cin>>num>>coefficient)
     {
-        if (expr == 0 && coefficient == 0)
+        if(num==coefficient&&num==0)
         {
             break;
         }
-        b[expr] = coefficient;
-    }
-    for (int i = 0; i < 1000; i++)
-    {
-        a[i] += b[i];
-    }
-    for (int i = 999; i >= 0; i--)
-    {
-        if (a[i] != 0)
+        if(a.count(num)==0)
         {
-            cout << i << " " << a[i] << endl;
+            a[num]=coefficient;
+        }
+        else
+        {
+            a[num]+=coefficient;
+        }
+    }
+    for(map<int,int>::reverse_iterator i=a.rbegin();i!=a.rend();i++)
+    {
+        if(i->second==0)
+        {
+            continue;
+        }
+        else
+        {
+            printf("%d %d\n",i->first,i->second);
         }
     }
     return 0;
