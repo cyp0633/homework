@@ -45,21 +45,18 @@ int main()
             }
         }
         childNum = childSet.size();
-        for (int i = 0; i < childNum; i++) //或许并不应该这样做？
+        for (int i = 0; i < childNum; i++)
         {
-            it = find(G[currPos].begin(), G[currPos].end(), reqSeq.front());
-            if (it != G[currPos].end()) //存在此儿子
-            {
-                visitSeq.emplace(reqSeq.front());
-                reqSeq.pop();
-            }
-            else
+            set<int>::iterator it = childSet.find(reqSeq.front());
+            if (it == childSet.end())
             {
                 printf("No");
                 return 0;
             }
-            childSet.clear(); //清空儿子集合
+            visitSeq.emplace(reqSeq.front());
+            reqSeq.pop();
         }
+        childSet.clear(); //清空儿子集合
     }
     printf("Yes");
     return 0;
