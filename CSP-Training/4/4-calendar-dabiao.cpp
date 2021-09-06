@@ -6,16 +6,17 @@ int main()
 {
     int daysPast = 0;
     freopen("C:\\Users\\cyp0633\\OneDrive\\Code\\homework\\dabiao.txt", "w", stdout);
-    for (int i = 1; i <= 7999; i++)
+    for (int i = 0; i <= 7999; i++)
     {
         if (check(i + 2000))
         {
-            printf("1,");
+            daysPast+=366;
         }
         else
         {
-            printf("0,");
+            daysPast+=365;
         }
+        printf("%d,",daysPast);
     }
     fclose(stdout);
 }
