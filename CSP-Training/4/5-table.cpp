@@ -9,6 +9,7 @@ int main()
 {
     int s[4950], a[100], n, numCount, i, j, k;
     bool isProperSolution;
+    multiset<int>::iterator sumPos;
     while (cin >> n)
     {
         memset(s, 0, sizeof(s));
@@ -31,22 +32,24 @@ int main()
             {
                 continue;
             }
-            isProperSolution = true;        //假设这个解是合适的
-            set<int> sum{s[0], s[1], s[i]}; //a_0,a_1,a_3的和先存在set中
+            isProperSolution = true; //假设这个解是合适的
+            multiset<int> sum{s[i]}; //a_2+a_3的和先存在set中
             numCount = 3;
             for (j = 2; j < (n - 1) * n / 2; j++)
             {
+                sumPos = sum.find(s[j]);
                 if (numCount == n) //假定所有数都找出来之后，这些和应该都记录在set里了
                 {
-                    if (sum.find(s[j]) == sum.end())
+                    if (sumPos == sum.end())
                     {
                         isProperSolution = false;
                         break;
                     }
                 }
-                if (sum.find(s[j]) != sum.end()) //s[j]在set中存在
+                if (sumPos != sum.end()) //s[j]在set中存在
                 // if (sum.contains(s[j]))      //C++20的方法
                 {
+                    sum.erase(sumPos);
                     continue;
                 }
                 a[numCount] = s[j] - a[0];
@@ -54,7 +57,7 @@ int main()
                 {
                     break;
                 }
-                for (k = 0; k < numCount; k++)
+                for (k = 1; k < numCount; k++)
                 {
                     sum.insert(a[numCount] + a[k]); //将该数和前面所有数的和加入set
                 }
