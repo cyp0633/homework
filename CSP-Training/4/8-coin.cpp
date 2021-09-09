@@ -1,4 +1,5 @@
 //最少钱币数
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -6,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    int dp[3001], value[10], m, k;
+    int dp[11][3001], value[11], m, k; //m是钱数，k是面值数
     while (cin >> m)
     {
         if (m == 0)
@@ -14,33 +15,30 @@ int main()
             break;
         }
         scanf("%d", &k);
-        memset(value, 0, sizeof(value));
-        for (int i = 0; i < k; i++)
+        for (int i = 1; i <= k; i++)
         {
             scanf("%d", &value[i]);
-            dp[value[i]] = 1;
         }
-        for (int i = 1; i <= m; i++)
+        memset(dp, 0x7f, sizeof(dp));
+        dp[0][0] = 0;
+        for (int i = 1; i <= k; i++)
         {
-            if (dp[i] == 0)
+            dp[i][0] = 0;
+            for (int j = 0; j <= m; j++)
             {
-                continue;
-            }
-            for (int j = 0; j < k; j++)
-            {
-                if (dp[i + value[j]] == 0)
+                if (j < value[i])
                 {
-                    dp[i + value[j]] = dp[i] + 1;
+                    dp[i][j] = dp[i - 1][j];
                 }
                 else
                 {
-                    dp[i + value[j]] = dp[i + value[j]] < (dp[i] + 1) ? dp[i + value[j]] : (dp[i] + 1); //取最小值
+                    dp[i][j] = min(dp[i - 1][j], dp[i][j - value[i]] + 1);
                 }
             }
         }
-        if (dp[m] != 0)
+        if (dp[k][m] <= m)
         {
-            printf("%d\n", dp[m]);
+            printf("%d\n", dp[k][m]);
         }
         else
         {
