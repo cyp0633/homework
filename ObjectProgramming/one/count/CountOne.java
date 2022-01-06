@@ -1,6 +1,6 @@
 package ObjectProgramming.one.count;
 
-//计算int型二进制的个数
+//计算int型二进制1的个数
 import java.util.*;
 
 public class CountOne {
